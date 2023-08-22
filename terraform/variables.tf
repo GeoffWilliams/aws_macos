@@ -13,12 +13,12 @@ variable "lab_name" {
 variable "public_access_cidr" {
   description = "CIDR to allow access from/IP+netmask address of your home router for SSH access (ex [X.X.X.X/32])"
 }
-variable "ec2_key_name" {
-  description = "Name of your EC2 keypair for SSH access"
-}
 variable "ec2_instance_type" {
   description = "AWS instance type to use for k3s"
 }
 variable "ec2_volume_size" {
   description = "Size of EBS volume (GB)"
+}
+variable "aws_profile" {
+  description = "AWS profile to use"
 }

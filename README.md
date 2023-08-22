@@ -40,7 +40,7 @@ Since most macOS programs are GUI apps, its just about impossible to do all task
 ```shell
 cd ansible
 
-# test connectivity
+# test connectivity - wait a few mins for host to alive
 ansible -m ping all -i hosts.yml
 
 ansible-playbook -i hosts.yml playbooks/vnc.yml
@@ -67,7 +67,19 @@ Finally, you can connect via VNC:
 
 ![macos desktop](./images/macos.png)
 
+## What Next?
+
+1. [App setups](./doc/app_setup.md)
+2. [Docker with bridge networking](./doc/docker.md)
+3. [K3D with with accessible load balancers](./doc/k3d.md)
+
+
 ## Cleanup
+
+* Shutting down EC2 mac instances takes 10 minutes+ - this will fail the terraform script
+* Need to "release" the EC2 dedicated host to stop being billed (in 24hr increments)
+* Sometimes it take half hour or so for the EC2 host to realize its no longer occupied
+* Be patient and re-run terraform after some time or just `release` with the AWS console
 
 ```shell
 cd terraform

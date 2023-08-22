@@ -1,6 +1,7 @@
 provider "aws" {
   region = var.aws_region
-
+  # eg...
+  profile = var.aws_profile
   default_tags {
     tags = {
       "owner_name"  = var.owner_name
@@ -10,6 +11,8 @@ provider "aws" {
 }
 
 # Lookup the current AMI for macOS 13.5 (Ventura)
+# To find the deets of an image use the API or click the "community" tab in AMI Catalog, then find the image and
+# lookup the details
 data "aws_ami" "macos" {
   most_recent = true
 
@@ -23,7 +26,8 @@ data "aws_ami" "macos" {
     values = ["hvm"]
   }
 
-  owners = ["839598134531"] # Apple
+  # Amazon (Apple) - different in every region
+  owners = ["605624831197"]
 }
 
 # availablility zone names
@@ -31,24 +35,12 @@ data "aws_availability_zones" "available" {
   state = "available"
 }
 
-# # vpc
-# resource "aws_vpc" "vpc" {
-#   cidr_block           = "172.16.0.0/16"
-#   enable_dns_support   = true
-#   enable_dns_hostnames = true
-#   tags                 = {
-#     Name = var.lab_name
-#   }
-# }
+# upload our "normal" SSH key
+resource "aws_key_pair" "keypair" {
+  key_name   = "gwilliams-${var.lab_name}"
+  public_key = file("~/.ssh/id_rsa.pub")
+}
 
-
-# # igw
-# resource "aws_internet_gateway" "igw" {
-#   vpc_id = aws_vpc.vpc.id
-#   tags   = {
-#     Name = var.lab_name
-#   }
-# }
 
 # ssh in
 resource "aws_security_group" "public_access" {
@@ -79,16 +71,6 @@ resource "aws_security_group" "public_access" {
   }
 }
 
-# subnet
-# resource "aws_subnet" "public" {
-#   cidr_block              = "172.16.0.0/24"
-#   vpc_id                  = aws_vpc.vpc.id
-#   map_public_ip_on_launch = true
-#   tags                    = {
-#     Name = "${var.lab_name} - public"
-#   }
-# }
-
 resource "aws_network_interface_sg_attachment" "instance_attachment" {
   security_group_id    = aws_security_group.public_access.id
   network_interface_id = aws_instance.macos.primary_network_interface_id
@@ -100,16 +82,16 @@ resource "aws_ec2_host" "mac" {
   instance_type     = var.ec2_instance_type
   availability_zone =  data.aws_availability_zones.available.names[0]
   auto_placement    = "on"
+  tags = {
+    Name = "${var.owner_name} - macOS"
+  }
 }
 
 # ec2 instance
 resource "aws_instance" "macos" {
   ami                         = data.aws_ami.macos.id
   instance_type               = var.ec2_instance_type
-  key_name                    = var.ec2_key_name
-#  vpc_security_group_ids      = [aws_security_group.public_access.id]
-#  subnet_id                   = aws_subnet.public.id
-  # Dedicated tenancy settings
+  key_name                    = aws_key_pair.keypair.key_name
   tenancy                     = "host"
   root_block_device {
     volume_type           = "gp2"
@@ -120,10 +102,6 @@ resource "aws_instance" "macos" {
     Name = "${var.owner_name} - macOS"
     hostname = "macOS"
   }
-  # metadata_options {
-  #   http_endpoint          = "enabled"
-  #   instance_metadata_tags = "enabled"
-  # }
   lifecycle {
     ignore_changes = [ami]
   }
@@ -134,7 +112,7 @@ output "sshconfig" {
     Host macos
       HostName ${aws_instance.macos.public_dns}
       User ec2-user
-      IdentityFile=~/.ssh/aws.pem
+      IdentityFile=~/.ssh/id_rsa
   EOF
 }
 

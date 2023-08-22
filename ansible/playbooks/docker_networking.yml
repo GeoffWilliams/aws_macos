@@ -1,0 +1,16 @@
+- name: Docker networking
+  hosts: all
+  become: true
+  become_user: ec2-user
+  become_method: sudo
+  tasks:
+  - community.general.homebrew:
+      name: chipmk/tap/docker-mac-net-connect
+      state: present
+      update_homebrew: true
+  # must do as root despite what output of brew install command says
+  - name: docker mac net service
+    become: true
+    become_user: root
+    ansible.builtin.shell: |
+      /opt/homebrew/bin/brew services start chipmk/tap/docker-mac-net-connect
