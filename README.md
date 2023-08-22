@@ -14,7 +14,7 @@ Easy! I follow Tony on YouTube 😂
 ## Prerequisites
 
 1. You must allow dedicated mac1/mac2 quotas for EC2: ![mac1/mac2 quotas](./images/quotas.png)
-2. Copy `terraform/terraform.tfvars.example` to `terraform/terraform.tfvars` and adjust as required
+2. Copy `terraform/terraform.tfvars.example` to `terraform/terraform.tfvars` and adjust as needed
 
 ## Create a macOS box accessible via SSH
 
@@ -32,8 +32,6 @@ Paste the `sshconfig` output into `~/.ssh/config` and then login to the macOS by
 ```shell
 ssh macos
 ```
-
-Enjoy!
 
 ## GUI access
 
@@ -59,8 +57,19 @@ sudo /usr/bin/dscl . -passwd /Users/ec2-user
 
 Finally, you can connect via VNC:
 
-* Client software for Linux: [remmina](https://remmina.org/)
+* Client software for Linux: [Remmina](https://remmina.org/)
 * Server: localhost
 * Port: 5900
 * Username: ec2-user
 * Password: whatever you just set
+
+"Enjoy"!
+
+![macos desktop](./images/macos.png)
+
+## Cleanup
+
+```shell
+cd terraform
+terraform destroy
+```
