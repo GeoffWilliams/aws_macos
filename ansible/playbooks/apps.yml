@@ -9,7 +9,8 @@
       state: present
       update_homebrew: true
   - name: "CFSSL"
+    # path seems to change randomly between intel/arm - rosetta?
     ansible.builtin.shell: |
-      export PATH="{{ ansible_env.PATH }}:/usr/local/bin"
+      export PATH="{{ ansible_env.PATH }}:/usr/local/bin:/opt/homebrew/bin"
       go install github.com/cloudflare/cfssl/cmd/...@latest
 
