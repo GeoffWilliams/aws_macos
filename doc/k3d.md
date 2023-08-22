@@ -1,6 +1,4 @@
----
-title: K3D on macOS with accessible load balancers
----
+# K3D on macOS with accessible load balancers
 
 > **Note**
 > Use the latest docker and k3d versions!

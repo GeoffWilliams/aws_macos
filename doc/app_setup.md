@@ -1,6 +1,4 @@
----
-title: App setup
----
+# App setup
 
 Some creature comfort/essential apps are needed for macOS, you can do by hand:
 

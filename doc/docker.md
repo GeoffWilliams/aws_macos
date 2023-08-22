@@ -1,6 +1,4 @@
----
-title: Docker with bridge networking
----
+# Docker with bridge networking
 
 How to setup Docker on a mac with bridged networking. macOS users must use Docker since [`podman`](https://podman.io) doesnt work properly on macOS with K3D
 
