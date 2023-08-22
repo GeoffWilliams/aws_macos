@@ -75,4 +75,25 @@ And finally, testing the teapot:
 
 ```shell
 curl -k http://172.18.0.100/status/418
+
+
+    -=[ teapot ]=-
+
+       _...._
+     .'  _ _ `.
+    | ."` ^ `". _,
+    \_;`"---"`|//
+      |       ;/
+      \_     _/
+        `"""`
 ```
+
+If you see the teapot you have Docker + K3D + K3S + Kubernetes + Load balancer + bridged networking working - well done!
+
+## Troubleshooting
+
+* Docker wont start until you login
+* K3d does not like reboots (I had to recreate cluster - theres probably an easier way)
+* Your computer will be very slow! (use k3d command to stop the cluster)
+* Some kubernetes apps (eg CFK/CP) fail to start fully - check your kubernetes node didnt randomly die. See next point
+* Some kubernetes apps will crash nodes/laptop/everything - macs are just not hardcore enough for some tasks, even with a ton of swap allocated. Get yourself a thinkpad or run workload on a spare Linux PC or the cloud.
