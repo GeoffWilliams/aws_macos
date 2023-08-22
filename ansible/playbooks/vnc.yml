@@ -1,0 +1,12 @@
+- name: Setup VNC
+  hosts: all
+  become: true
+  become_user: root
+
+  tasks:
+  - name: "set macOS defaults"
+    ansible.builtin.command:
+      cmd: defaults write /var/db/launchd.db/com.apple.launchd/overrides.plist com.apple.screensharing -dict Disabled -bool false
+  - name: "load screen sharing"
+    ansible.builtin.command:
+      cmd:  launchctl load -w /System/Library/LaunchDaemons/com.apple.screensharing.plist
