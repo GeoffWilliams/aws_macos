@@ -17,3 +17,6 @@ spec:
       port: 443
       targetPort: 443
   type: LoadBalancer
+  selector:
+    app: httpbin
+

@@ -68,3 +68,7 @@ cd ansible
 
 ansible-playbook -i hosts.yml playbooks/docker_networking.yml
 ```
+
+## Test networking
+
+[Follow these instructions to test docker](https://github.com/chipmk/docker-mac-net-connect#usage)
