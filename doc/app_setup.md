@@ -9,6 +9,7 @@ Some creature comfort/essential apps are needed for macOS, you can do by hand:
 5. Confluent CLI: `brew install confluentinc/tap/cli`
 6. CFSSL: `go install github.com/cloudflare/cfssl/cmd/...@latest`
 7. [helm](https://helm.sh/): `brew install helm`
+8. Update `$PATH` to add binaries installed by go
 
 Or via Ansible:
 
@@ -20,3 +21,5 @@ ansible-galaxy collection install community.general
 
 ansible-playbook -i hosts.yml playbooks/apps.yml
 ```
+
+Dont forget to logout and back in again to refresh `$PATH`

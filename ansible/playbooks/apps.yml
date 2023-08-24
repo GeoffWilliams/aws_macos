@@ -13,4 +13,16 @@
     ansible.builtin.shell: |
       export PATH="{{ ansible_env.PATH }}:/usr/local/bin:/opt/homebrew/bin"
       go install github.com/cloudflare/cfssl/cmd/...@latest
-
+  - name: "add GO installed binaries to path"
+    ansible.builtin.lineinfile:
+      path: /Users/ec2-user/.zshrc
+      state: present
+      regexp: '^export PATH='
+      line: export PATH="~/go/bin:/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}"
+  # https://stackoverflow.com/a/65601197
+  - name: "symlink java"
+    become: true
+    become_user: root
+    # Just do what the script says, -r probably needed and no option for this in ansible
+    ansible.builtin.shell: |
+      sudo ln -sfn /opt/homebrew/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
