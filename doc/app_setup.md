@@ -19,7 +19,11 @@ cd ansible
 # one time
 ansible-galaxy collection install community.general
 
+# general apps
 ansible-playbook -i hosts.yml playbooks/apps.yml
+
+# Confluent SDK/CLI
+ansible-playbook -i hosts.yml playbooks/confluent.yml
 ```
 
 Dont forget to logout and back in again to refresh `$PATH`

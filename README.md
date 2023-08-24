@@ -69,7 +69,7 @@ Finally, you can connect via VNC:
 
 ## What Next?
 
-1. [App setups](./doc/app_setup.md)
+1. [Apps + Confluent SDK/CLI](./doc/app_setup.md)
 2. [Docker with bridge networking](./doc/docker.md)
 3. [K3D with with accessible load balancers](./doc/k3d.md)
 

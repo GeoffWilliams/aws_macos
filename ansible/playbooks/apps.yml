@@ -5,7 +5,7 @@
   become_method: sudo
   tasks:
   - community.general.homebrew:
-      name: golang,java,yq,jq,confluentinc/tap/cli,helm
+      name: golang,java,yq,jq,helm
       state: present
       update_homebrew: true
   - name: "CFSSL"
@@ -18,7 +18,7 @@
       path: /Users/ec2-user/.zshrc
       state: present
       regexp: '^export PATH='
-      line: export PATH="~/go/bin:/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}"
+      line: export PATH="~/go/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/confluent/bin:~/bin:~/.bin${PATH+:$PATH}"
   # https://stackoverflow.com/a/65601197
   - name: "symlink java"
     become: true

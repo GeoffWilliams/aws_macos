@@ -1,0 +1,26 @@
+# PATH is already fixed in apps.yml
+- name: Confluent SDK/CLI setup
+  hosts: all
+  become: true
+  become_user: ec2-user
+  become_method: sudo
+  tasks:
+  - name: Confluent SDK
+    ansible.builtin.unarchive:
+      src: https://packages.confluent.io/archive/7.4/confluent-7.4.1.zip
+      dest: /usr/local/
+      remote_src: yes
+    become: true
+    become_user: root
+  - name: Symlink confluent SDK
+    ansible.builtin.file:
+      src: /usr/local/confluent-7.4.1
+      dest: /usr/local/confluent
+      owner: root
+      group: wheel
+      state: link
+    become: true
+    become_user: root
+  - name: "confluent cli"
+    ansible.builtin.shell: |
+      curl -sL --http1.1 https://cnfl.io/cli | sh -s -- latest
