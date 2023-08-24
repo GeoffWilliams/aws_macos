@@ -18,7 +18,9 @@
       path: /Users/ec2-user/.zshrc
       state: present
       regexp: '^export PATH='
-      line: export PATH="~/go/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/confluent/bin:~/bin:~/.bin${PATH+:$PATH}"
+      # ~/bin must be higher up path then confluent CLI to avoid using old CLI in SDK...
+      # ZSH does not evaluate ~/ at login
+      line: export PATH="/Users/ec2-user/bin:/Users/ec2-user/.bin:/Users/ec2-user/go/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/confluent/bin${PATH+:$PATH}"
   # https://stackoverflow.com/a/65601197
   - name: "symlink java"
     become: true
