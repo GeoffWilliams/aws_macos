@@ -1,5 +1,8 @@
 # Docker with bridge networking
 
+> [!NOTE]
+> This doc is based around AWS since I dont use macOS. The same instructions apply if you have your own macOS device, just skip anything to do with VNC
+
 How to setup Docker on a mac with bridged networking. macOS users must use Docker since [`podman`](https://podman.io) doesnt work properly on macOS with K3D
 
 ## Installation
